@@ -89,7 +89,7 @@ async def on_message(message: cl.Message):
         if event.type == "raw_response_event" and isinstance(event.data, ResponseTextDeltaEvent):
             full_response += event.data.delta
             msg.content = full_response
-            sleep(1)
+            sleep(.500)
             await msg.update()
 
     history.append({"role": "assistant", "content": response.final_output})
