@@ -5,11 +5,14 @@ import chainlit as cl
 import dotenv
 import os
 from openai.types.responses import ResponseTextDeltaEvent
-
+from pydantic import BaseModel
 from agents import Agent, Runner, set_tracing_disabled
 from agents import enable_verbose_stdout_logging
 from agents.extensions.models.litellm_model import LitellmModel
 
+class techstack(BaseModel):
+    techStack: str
+    timeToBuild: float
 #setting verbose logging
 # This will enable verbose logging to stdout
 # This is useful for debugging and understanding the flow of the program
@@ -24,25 +27,25 @@ MODEL: str = os.getenv("MODEL") or ""
 
 web_developer_agent: Agent = Agent(
       name="Web Developer Agent",
-      instructions="You are expert on Full Stack Web Developer your Tech stack in Nextjs, FastAPI, MongoDB, Nodejs, TailwindCSS.",
+      instructions="You are expert on Full Stack Web Developer your Tech stack in Nextjs, FastAPI, MongoDB, Nodejs, TailwindCSS. You return the required tech stack in structure output that described",
       model=LitellmModel(model=MODEL,api_key=GEMINI_API_KEY),
       handoff_description="Web Developer Expert",
     )
 mobile_developer_agent: Agent = Agent(
       name="Mobile Developer Agent",
       model=LitellmModel(model=MODEL,api_key=GEMINI_API_KEY),
-      instructions="You are expert on Mobile Application Developer Expert. Your techstack in Kotlin/java and Firebase",
+      instructions="You are expert on Mobile Application Developer Expert. Your techstack in Kotlin/java, flutter and Firebase,You return the required tech stack in structure output that described",
       handoff_description="Mobile Application Developer Expert in Java Kotlin/ XML",
     )
 dev_ops_agent: Agent = Agent(
       name="Dev OPS Agent",
       model=LitellmModel(model=MODEL,api_key=GEMINI_API_KEY),
-      instructions="You are expert on DevOPS and CI/CD",
+      instructions="You are expert on DevOPS and CI/CD, You return the required tech stack in structure output that described",
     )
 openai_agent: Agent = Agent(
       name="OpenAI Agent",
       model=LitellmModel(model=MODEL,api_key=GEMINI_API_KEY),
-      instructions="You are expert on Open AI Agent SDK",
+      instructions="You are expert on Open AI Agent SDK,You return the required tech stack in structure output that described",
     )
 agentic_ai_dev_agent: Agent = Agent(
       name="Agentic AI Developer Agent",
